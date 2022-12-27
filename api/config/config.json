@@ -1,8 +1,8 @@
 {
     "development": {
         "username": "root",
-        "password": null,
-        "database": "english_school",
+        "password": "mysecretpassword",
+        "database": "escola_ingles",
         "host": "127.0.0.1",
         "port": 55000,
         "dialect": "mysql",
