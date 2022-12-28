@@ -51,6 +51,17 @@ class PessoaController {
             return res.status(500).json(error.message);
         }
     };
+
+    static excluiPessoa = async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            await database.Pessoas.destroy({ where: { id: Number(id) } });
+            return res.status(200).json({ message: `Id ${id} excluído.` });
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    };
 }
 
 module.exports = PessoaController;
