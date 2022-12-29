@@ -63,17 +63,6 @@ class PessoaController {
         }
     };
 
-    static restauraPessoa = async (req, res) => {
-        const { id } = req.params;
-
-        try {
-            await database.Pessoas.restore({ where: { id: Number(id) } });
-            return res.status(200).json({ message: `Id ${id} restaurado.` });
-        } catch (error) {
-            return res.status(500).json(error.message);
-        }
-    };
-
     static retornaMatricula = async (req, res) => {
         const { idEstudante, idMatricula } = req.params;
 

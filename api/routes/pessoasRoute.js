@@ -8,8 +8,6 @@ router.get('/pessoas/:id', PessoaController.retornaPessoaPorId);
 router.post('/pessoas', PessoaController.criaPessoa);
 router.put('/pessoas/:id', PessoaController.atualizaPessoa);
 router.delete('/pessoas/:id', PessoaController.excluiPessoa);
-router.post('/pessoas/:id/restaura', PessoaController.restauraPessoa);
-
 router.get(
     '/pessoas/:idEstudante/matriculas/:idMatricula',
     PessoaController.retornaMatricula,
