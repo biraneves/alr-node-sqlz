@@ -62,6 +62,81 @@ class PessoaController {
             return res.status(500).json(error.message);
         }
     };
+
+    static retornaMatricula = async (req, res) => {
+        const { idEstudante, idMatricula } = req.params;
+
+        try {
+            // const matricula = await database.Matriculas.findAll({
+            //     where: {
+            //         id: Number(idMatricula),
+            //         estudante_id: Number(idEstudante),
+            //     },
+            // });
+            const [results, metadata] = await database.sequelize.query(
+                `select * from Matriculas where id = ${Number(
+                    idMatricula,
+                )} and estudante_id = ${Number(idEstudante)}`,
+            );
+            return res.status(200).json(results);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    };
+
+    static criaMatricula = async (req, res) => {
+        const { idEstudante } = req.params;
+        const novaMatricula = {
+            ...req.body,
+            estudante_id: Number(idEstudante),
+        };
+
+        try {
+            const novaMatriculaCriada = await database.Matriculas.create(
+                novaMatricula,
+            );
+            return res.status(200).json(novaMatriculaCriada);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    };
+
+    static atualizaMatricula = async (req, res) => {
+        const { idEstudante, idMatricula } = req.params;
+        const novasInfos = req.body;
+
+        try {
+            await database.Matriculas.update(novasInfos, {
+                where: {
+                    id: Number(idMatricula),
+                    estudante_id: Number(idEstudante),
+                },
+            });
+            const [results, metadata] = await database.sequelize.query(
+                `select * from Matriculas where id = ${Number(idMatricula)}`,
+            );
+            return res.status(200).json(results);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    };
+
+    static excluiMatricula = async (req, res) => {
+        const { idEstudante, idMatricula } = req.params;
+
+        try {
+            await database.Matriculas.destroy({
+                where: {
+                    id: Number(idMatricula),
+                },
+            });
+            return res
+                .status(200)
+                .json({ message: `Matrícula ${idMatricula} foi excluída.` });
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    };
 }
 
 module.exports = PessoaController;

@@ -8,5 +8,18 @@ router.get('/pessoas/:id', PessoaController.retornaPessoaPorId);
 router.post('/pessoas', PessoaController.criaPessoa);
 router.put('/pessoas/:id', PessoaController.atualizaPessoa);
 router.delete('/pessoas/:id', PessoaController.excluiPessoa);
+router.get(
+    '/pessoas/:idEstudante/matriculas/:idMatricula',
+    PessoaController.retornaMatricula,
+);
+router.post('/pessoas/:idEstudante/matriculas', PessoaController.criaMatricula);
+router.put(
+    '/pessoas/:idEstudante/matriculas/:idMatricula',
+    PessoaController.atualizaMatricula,
+);
+router.delete(
+    '/pessoas/:idEstudante/matriculas/:idMatricula',
+    PessoaController.excluiMatricula,
+);
 
 module.exports = router;
