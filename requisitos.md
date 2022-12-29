@@ -1,6 +1,6 @@
 # Novos requisitos do projeto
 
--   O cliente não gostaria que registros importantes do sistema, como Pessoas, fossem apagados definitivamente do banco de dados.
+-   ~~O cliente não gostaria que registros importantes do sistema, como Pessoas, fossem apagados definitivamente do banco de dados.~~
 
 -   Para deixar a interface mais limpa, o cliente gostaria que na lista de Pessoas, por padrão, fossem exibidos somente os usuários ativos.
 
