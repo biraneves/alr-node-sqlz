@@ -100,18 +100,21 @@ class PessoaController {
         const { idEstudante, idMatricula } = req.params;
 
         try {
-            // const matricula = await database.Matriculas.findAll({
-            //     where: {
-            //         id: Number(idMatricula),
-            //         estudante_id: Number(idEstudante),
-            //     },
-            // });
-            const [results, metadata] = await database.sequelize.query(
-                `select * from Matriculas where id = ${Number(
-                    idMatricula,
-                )} and estudante_id = ${Number(idEstudante)}`,
-            );
-            return res.status(200).json(results);
+            const matricula = await database.Matriculas.findAll({
+                attributes: [
+                    'id',
+                    'status',
+                    'estudante_id',
+                    'turma_id',
+                    'createdAt',
+                    'updatedAt',
+                ],
+                where: {
+                    id: Number(idMatricula),
+                    estudante_id: Number(idEstudante),
+                },
+            });
+            return res.status(200).json(matricula);
         } catch (error) {
             return res.status(500).json(error.message);
         }
@@ -145,10 +148,20 @@ class PessoaController {
                     estudante_id: Number(idEstudante),
                 },
             });
-            const [results, metadata] = await database.sequelize.query(
-                `select * from Matriculas where id = ${Number(idMatricula)}`,
-            );
-            return res.status(200).json(results);
+            const matricula = await database.Matriculas.findAll({
+                attributes: [
+                    'id',
+                    'status',
+                    'estudante_id',
+                    'turma_id',
+                    'createdAt',
+                    'updatedAt',
+                ],
+                where: {
+                    id: Number(idMatricula),
+                },
+            });
+            return res.status(200).json(matricula);
         } catch (error) {
             return res.status(500).json(error.message);
         }
@@ -184,6 +197,31 @@ class PessoaController {
             return res
                 .status(200)
                 .json({ message: `Matrícula ${idMatricula} restaurada.` });
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    };
+
+    static retornaMatriculasPorEstudante = async (req, res) => {
+        const { idEstudante } = req.params;
+
+        try {
+            const pessoa = await database.Pessoas.findOne({
+                where: {
+                    id: Number(idEstudante),
+                },
+            });
+            const matriculas = await pessoa.getAulasMatriculadas({
+                attributes: [
+                    'id',
+                    'status',
+                    'estudante_id',
+                    'turma_id',
+                    'createdAt',
+                    'updatedAt',
+                ],
+            });
+            return res.status(200).json(matriculas);
         } catch (error) {
             return res.status(500).json(error.message);
         }

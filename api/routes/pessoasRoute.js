@@ -13,6 +13,10 @@ router.delete('/pessoas/:id', PessoaController.excluiPessoa);
 router.post('/pessoas/:id/restaura', PessoaController.restauraPessoa);
 
 router.get(
+    '/pessoas/:idEstudante/matriculas',
+    PessoaController.retornaMatriculasPorEstudante,
+);
+router.get(
     '/pessoas/:idEstudante/matriculas/:idMatricula',
     PessoaController.retornaMatricula,
 );
