@@ -23,5 +23,9 @@ router.delete(
     '/pessoas/:idEstudante/matriculas/:idMatricula',
     PessoaController.excluiMatricula,
 );
+router.post(
+    '/pessoas/:idEstudante/matriculas/:idMatricula/restaura',
+    PessoaController.restauraMatricula,
+);
 
 module.exports = router;

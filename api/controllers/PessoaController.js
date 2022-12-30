@@ -148,6 +148,24 @@ class PessoaController {
             return res.status(500).json(error.message);
         }
     };
+
+    static restauraMatricula = async (req, res) => {
+        const { idEstudante, idMatricula } = req.params;
+
+        try {
+            await database.Matriculas.restore({
+                where: {
+                    id: Number(idMatricula),
+                    estudante_id: Number(idEstudante),
+                },
+            });
+            return res
+                .status(200)
+                .json({ message: `Matrícula ${idMatricula} restaurada.` });
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    };
 }
 
 module.exports = PessoaController;
