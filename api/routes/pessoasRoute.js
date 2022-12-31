@@ -7,6 +7,14 @@ router.get('/pessoas', PessoaController.retornaPessoasAtivas);
 router.get('/pessoas/todos', PessoaController.retornaTodasAsPessoas);
 router.get('/pessoas/inativos', PessoaController.retornaPessoasInativas);
 router.get('/pessoas/:id', PessoaController.retornaPessoaPorId);
+router.get(
+    '/pessoas/matriculas/:idTurma/confirmadas',
+    PessoaController.retornaMatriculasPorTurma,
+);
+router.get(
+    '/pessoas/matriculas/lotadas',
+    PessoaController.retornaTurmasLotadas,
+);
 router.post('/pessoas', PessoaController.criaPessoa);
 router.put('/pessoas/:id', PessoaController.atualizaPessoa);
 router.delete('/pessoas/:id', PessoaController.excluiPessoa);
