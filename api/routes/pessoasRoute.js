@@ -19,6 +19,10 @@ router.post('/pessoas', PessoaController.criaPessoa);
 router.put('/pessoas/:id', PessoaController.atualizaPessoa);
 router.delete('/pessoas/:id', PessoaController.excluiPessoa);
 router.post('/pessoas/:id/restaura', PessoaController.restauraPessoa);
+router.post(
+    '/pessoas/:idEstudante/desativa',
+    PessoaController.desativaEstudante,
+);
 
 router.get(
     '/pessoas/:idEstudante/matriculas',

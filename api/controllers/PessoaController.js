@@ -254,6 +254,8 @@ class PessoaController {
     };
 
     static retornaTurmasLotadas = async (req, res) => {
+        // ! Isto não deveria ser hard coded.
+        // TODO: Desenvolver outra solução para definir a quantidade de lotação da turma.
         const lotacaoTurma = 2;
 
         try {
@@ -266,6 +268,46 @@ class PessoaController {
                 having: Sequelize.literal(`count(turma_id) >= ${lotacaoTurma}`),
             });
             return res.status(200).json(turmasLotadas.count);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    };
+
+    static desativaEstudante = async (req, res) => {
+        const { idEstudante } = req.params;
+
+        try {
+            database.sequelize.transaction(async (transacao) => {
+                await database.Pessoas.update(
+                    {
+                        ativo: false,
+                    },
+                    {
+                        where: {
+                            id: Number(idEstudante),
+                        },
+                    },
+                    {
+                        transaction: transacao,
+                    },
+                );
+                await database.Matriculas.update(
+                    {
+                        status: 'cancelado',
+                    },
+                    {
+                        where: {
+                            estudante_id: Number(idEstudante),
+                        },
+                    },
+                    {
+                        transaction: transacao,
+                    },
+                );
+                return res.status(200).json({
+                    message: `Estudante ${idEstudante} desativado e matrículas canceladas.`,
+                });
+            });
         } catch (error) {
             return res.status(500).json(error.message);
         }
